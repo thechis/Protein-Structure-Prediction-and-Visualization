@@ -1,0 +1,7 @@
+tensorflow
+pandas
+numpy
+biopython
+pymol
+pyyaml
+requests
