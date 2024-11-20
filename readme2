@@ -1,0 +1,171 @@
+# Protein Structure Prediction and Visualization
+
+## Overview
+This project aims to predict and visualize protein structures using machine learning and bioinformatics tools. The project is structured into a series of scripts that automate the download of protein sequence and structure data, preprocess the data, train a predictive model, evaluate its performance, and finally visualize the predicted protein structures.
+
+### Motivation
+Protein structure prediction is a fundamental problem in bioinformatics. Understanding protein structures is crucial for drug discovery, understanding biological processes, and disease modeling. This project employs advanced machine learning techniques to predict protein structures and incorporates visualization to analyze results.
+
+## Project Structure
+```
+protein-structure-prediction/
+|-- data/
+|   |-- proteins.fasta
+|   |-- processed_sequences.npy
+|   |-- test/
+|   |-- protein_ids.txt
+|   |-- pdb_ids.txt
+|-- configs/
+|   |-- train_config.yaml
+|-- src/
+|   |-- data_download.py
+|   |-- preprocess_data.py
+|   |-- train_model.py
+|   |-- evaluate_model.py
+|   |-- visualize_structures.py
+|   |-- install_pymol.sh
+|   |-- main.py
+|-- logs/
+|   |-- workflow.log
+|-- requirements.txt
+```
+
+## Workflow
+The main workflow is managed through the `main.py` script, which runs the various stages of the project in sequence:
+
+1. **Data Download**: Download protein sequences and structures from online databases.
+2. **Data Preprocessing**: Convert the raw protein sequences into a form suitable for training machine learning models.
+3. **Model Training**: Train a predictive model using the preprocessed data.
+4. **Model Evaluation**: Evaluate the performance of the trained model using test data.
+5. **Visualization**: Visualize the predicted protein structures for further analysis.
+
+### Dependencies
+To install all required Python packages, run:
+```bash
+pip install -r requirements.txt
+```
+
+To install PyMOL, an open-source molecular visualization tool, run the provided `install_pymol.sh` script:
+```bash
+bash src/install_pymol.sh
+```
+
+## Detailed Descriptions
+
+### 1. Data Download
+The data download process is managed by the `data_download.py` script. It utilizes NCBI's `Entrez` service to download protein sequences and RCSB's PDB repository to download protein structures.
+
+**Usage**:
+```bash
+python src/data_download.py
+```
+
+#### Example Code:
+```python
+import os
+import logging
+from Bio import Entrez
+
+# Set your email for NCBI (required)
+Entrez.email = "chibunduawandu@gmail.com"
+
+# Function to download protein sequences and structures
+# ... (see full script for details)
+```
+
+For diagrams illustrating the protein data flow from databases to the local system, please refer to [NCBI Documentation](https://www.ncbi.nlm.nih.gov/books/NBK25497/) and [RCSB PDB API Reference](https://www.rcsb.org/pages/webservices).
+
+### 2. Data Preprocessing
+The `preprocess_data.py` script processes the downloaded sequences into a format suitable for machine learning. The sequences are saved as NumPy arrays for efficient processing during model training.
+
+**Usage**:
+```bash
+python src/preprocess_data.py --input data/proteins.fasta --output data/processed/
+```
+
+#### Common Issues and Fixes
+- **Inhomogeneous Shape Error**: Ensure that all sequences are properly aligned or padded before converting to a NumPy array. Use padding techniques to handle sequences of different lengths.
+
+For an illustration of preprocessing steps, consider using a sequence alignment diagram, which can be found [here](https://www.ebi.ac.uk/training/online/course/ebi-next-generation-sequencing-practical-course/sequence-alignment).
+
+### 3. Model Training
+The `train_model.py` script is used to train a machine learning model on the preprocessed data. The training configuration is specified in `configs/train_config.yaml`.
+
+**Usage**:
+```bash
+python src/train_model.py --config configs/train_config.yaml
+```
+
+### 4. Model Evaluation
+The `evaluate_model.py` script evaluates the trained model using a held-out test set. It generates various metrics to assess the model's performance.
+
+**Usage**:
+```bash
+python src/evaluate_model.py --model checkpoints/model_checkpoint.h5 --test_data data/processed/test/
+```
+
+### 5. Visualization
+The `visualize_structures.py` script uses PyMOL to visualize the predicted protein structures.
+
+**Usage**:
+```bash
+python src/visualize_structures.py --input predictions/ --output visualizations/
+```
+
+For visualization diagrams and examples of protein structures, refer to the [PyMOL Wiki](https://pymolwiki.org/index.php/Main_Page).
+
+## Installation
+
+### Prerequisites
+- Python 3.10+
+- Homebrew (for macOS users to install dependencies)
+- [PyMOL](https://pymol.org/2/) for visualization
+
+### Setting Up
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/protein-structure-prediction.git
+   cd protein-structure-prediction
+   ```
+
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Install PyMOL:
+   ```bash
+   bash src/install_pymol.sh
+   ```
+
+## Running the Workflow
+To execute the entire workflow, simply run:
+```bash
+python src/main.py
+```
+This script will automatically run all the steps, from downloading data to visualizing the results.
+
+## Troubleshooting
+- **`command not found: ncbi-acc-download`**: Make sure that the `ncbi-acc-download` tool is installed and accessible in your system's PATH.
+- **ModuleNotFoundError for PyMOL**: Ensure PyMOL is correctly installed by running `pymol --version` to verify the installation.
+
+## Future Work
+- **Model Improvement**: Explore the use of transformer-based architectures like AlphaFold to improve accuracy.
+- **Dataset Expansion**: Expand the dataset to include more diverse protein families.
+- **Automated Hyperparameter Tuning**: Integrate tools like Optuna for hyperparameter tuning to improve model performance.
+
+## Resources
+- [NCBI Entrez Programming Utilities](https://www.ncbi.nlm.nih.gov/books/NBK25499/)
+- [RCSB PDB API](https://data.rcsb.org/redoc/index.html)
+- [PyMOL Documentation](https://pymol.org/2/support.html)
+
+## Diagrams and Illustrations
+For diagrams related to protein structure and workflow, please refer to the following links:
+- Protein Data Flow Diagram: [NCBI Data Flow](https://www.ncbi.nlm.nih.gov/books/NBK25497/)
+- Sequence Alignment Illustration: [EBI Alignment](https://www.ebi.ac.uk/training/online/course/ebi-next-generation-sequencing-practical-course/sequence-alignment)
+
+These resources will help provide visual context for understanding the overall workflow and processes involved in protein structure prediction.
+
+## Contact
+For any questions or issues, please contact Chibundu Awandu at chibunduawandu@gmail.com.
+
