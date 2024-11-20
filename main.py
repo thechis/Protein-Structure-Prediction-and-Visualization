@@ -19,8 +19,8 @@ logging.getLogger().addHandler(console)
 logging.info("Starting main.py")
 
 # Optional: Install dependencies
-install_requirements = False
-install_pymol = False
+install_requirements = True
+install_pymol = True
 
 if install_requirements:
     try:
